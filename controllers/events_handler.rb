@@ -27,4 +27,19 @@ class EventsHandler
         print event_queue
     end
 
+    def run_event(event)
+        
+        case event
+            when "print_event"
+                #logic for the print event
+            when "client_creation_event"
+                #logic for the creation event
+            when "leave_cash_register_event"
+                #logic for the remove client event
+            when "enter_cash_register_event"
+                #logic for move a client to a cash register
+            when "end_simulation_event"
+                exit(true)
+        end
+    end
 end
