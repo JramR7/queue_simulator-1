@@ -6,6 +6,24 @@ class CashRegisterSystem
         self.create_cash_register_system();
     end
 
+    def get_empty_cash_register
+        index_cash_register = 0
+        @cash_register_system.each do |cash_register|
+            if(cash_register.empty?){
+                return index_cash_register
+            }
+            index_cash_register += 1
+        end
+        return nil
+    end
+
+    def check_cash_register_empty(index_cash_register)
+        if(@cash_register_system[index_cash_register].empty?){
+            return true
+        }
+        return false
+    end
+
     def create_cash_register_system
         @cash_register_system = Array.new(@cash_register_quantity) {Array.new(0)}
     end
@@ -14,10 +32,15 @@ class CashRegisterSystem
         @cash_register_system[cash_register_index].push(client)
     end
 
-    def remove_client_of_register
-        @cash_register_system[cash_register_index].pop(client)
+    def remove_client_of_register(cash_register_index)
+        @cash_register_system[cash_register_index].pop()
     end
-    def print_()
+
+    def get_cash_register_quantity
+        return @cash_register_quantity
+    end
+
+    def print_
         print(@cash_register_system)
     end
 end
