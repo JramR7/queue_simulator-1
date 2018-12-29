@@ -6,3 +6,5 @@ git_source(:github) do |repo_name|
 end
 
 # put all gem dependancies here as: gem 'gem-name', '~> version'
+
+gem 'pqueue'
