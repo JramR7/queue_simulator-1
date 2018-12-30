@@ -29,6 +29,10 @@ class SupermarketSystem
         return index_of_queue
     end
 
+    def check_cash_register_empty(index_cash_register)
+        return @registers_system.check_cash_register_empty(index_cash_register)
+    end
+
     def remove_first_client_from_queue(index_of_queue)
         removed_client = @queue_system.remove_client_of_queue(index_of_queue)
         return removed_client
@@ -39,8 +43,11 @@ class SupermarketSystem
     end
 
     def get_empty_cash_register()
+        return @registers_system.get_empty_cash_register()
+    end
 
-
+    def get_spended_time_of_client(cash_register_index)
+        return @registers_system.get_spended_time_of_client(cash_register_index)
     end
 
     def print_

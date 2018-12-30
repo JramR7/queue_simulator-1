@@ -39,10 +39,10 @@ class QueueSystem
     end
 
     def remove_client_of_queue(index_of_queue)
-        if(@queue_system[index_of_queue].empty?){
+        if(@queue_system[index_of_queue].empty?)
             return nil
-        }
-        @queue_system[index_of_queue].shift()
+        end
+        return @queue_system[index_of_queue].shift()
     end
 
     def print_()

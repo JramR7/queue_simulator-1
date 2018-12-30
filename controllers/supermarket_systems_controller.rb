@@ -14,7 +14,7 @@ class SupermarketSystemController
 
         if(@supermarket_system.get_queue_quantity() != @supermarket_system.get_cash_register_quantity())
             return get_empty_cash_register()
-        elsif
+        else
             if(check_cash_register_empty(index_queue))
                 return index_queue
             end
@@ -32,24 +32,28 @@ class SupermarketSystemController
         return @supermarket_system.check_cash_register_empty(index_cash_register)
     end
 
-    def empty_cash_register(cash_register_index){
+    def empty_cash_register(cash_register_index)
         @supermarket_system.empty_cash_register(cash_register_index)
-    }
+    end
 
 
-    def assign_client_to_empty_cash_register(empty_cash_register){
+    def assign_client_to_empty_cash_register(empty_cash_register)
         if(@supermarket_system.get_queue_quantity() != @supermarket_system.get_cash_register_quantity())
-            assign_client_to_empty_cash_register_single_system(empty_cash_register)
-        elsif
-            assign_client_to_empty_cash_register_multiple_system(empty_cash_register)
+            return assign_client_to_empty_cash_register_single_system(empty_cash_register)
+        else
+            return assign_client_to_empty_cash_register_multiple_system(empty_cash_register)
         end
-    }
+    end
+
+    def get_spended_time_of_client(cash_register_index)
+        return @supermarket_system.get_spended_time_of_client(cash_register_index)
+    end
 
     def assign_client_to_empty_cash_register_multiple_system(empty_cash_register)
         client_to_assign = @supermarket_system.remove_first_client_from_queue(empty_cash_register)
-        if(client_to_assign == nil){
+        if(client_to_assign == nil)
             return nil
-        }
+        end
 
         @supermarket_system.assign_client_to_empty_cash_register(empty_cash_register,client_to_assign)
 
@@ -58,9 +62,9 @@ class SupermarketSystemController
 
     def assign_client_to_empty_cash_register_single_system(empty_cash_register)
         client_to_assign = @supermarket_system.remove_first_client_from_queue(0)
-        if(client_to_assign == nil){
+        if(client_to_assign == nil)
             return nil
-        }
+        end
 
         @supermarket_system.assign_client_to_empty_cash_register(empty_cash_register,client_to_assign)
 
@@ -73,7 +77,7 @@ class SupermarketSystemController
 
     private
 
-    def create_supermarket_system(queue_quantity, cash_register_quantity, system_type)
+    def create_supermarket_system(queue_quantity, cash_register_quantity)
         queue_system = QueueSystem.new(queue_quantity);
         cash_register_system = CashRegisterSystem.new(cash_register_quantity)
 
