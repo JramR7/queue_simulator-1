@@ -4,7 +4,7 @@ class QueueSystem
         @queue_quantity = queue_quantity
 
         if(@queue_quantity > 0)
-            self.create_queue_system();
+            self.create_queue_system()
 
         else
             puts "Error: You cannot create a queue system with 0 queues"
@@ -14,6 +14,10 @@ class QueueSystem
 
     def create_queue_system
         @queue_system = Array.new(@queue_quantity) {Array.new()}
+    end
+
+    def get_queue_quantity
+        return @queue_quantity
     end
 
     def get_emptiest_queue
@@ -31,11 +35,14 @@ class QueueSystem
     end
 
     def add_client_to_queue(index_of_queue, user)
-        @queue_system[index_of_queue].push(user);
+        @queue_system[index_of_queue].push(user)
     end
 
     def remove_client_of_queue(index_of_queue)
-        @queue_system[index_of_queue].shift();
+        if(@queue_system[index_of_queue].empty?)
+            return nil
+        end
+        return @queue_system[index_of_queue].shift()
     end
 
     def print_()
