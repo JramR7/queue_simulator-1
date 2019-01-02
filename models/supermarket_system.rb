@@ -7,10 +7,6 @@ class SupermarketSystem
 
     end
 
-    def assign_clients_to_cash_registers()
-        @registers_system
-    end
-
     def empty_cash_register(cash_register_index)
         @registers_system.remove_client_of_register(cash_register_index)
     end
