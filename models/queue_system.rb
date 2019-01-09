@@ -46,7 +46,8 @@ class QueueSystem
         end
     end
 
-    def print_()
-        print(@queue_system)
+    def get_queue_system
+        return @queue_system
     end
+    
 end

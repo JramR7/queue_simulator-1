@@ -22,13 +22,12 @@ class SupermarketSystemController
         if queue_quantity != registers_quantity
             (0..registers_quantity-1).each do |i|
                 empty_register = @supermarket_system.get_empty_register(i)
-                
+
                 if empty_register != nil
                     return empty_register
-                else
+                elsif (empty_register == nil) and (i == registers_quantity-1)
                     return nil
                 end
-
             end 
         # used for the multiple queue system
         else
@@ -82,8 +81,8 @@ class SupermarketSystemController
         @supermarket_system.get_client_register_time(register_index)
     end
 
-    def print_
-        @supermarket_system.print_()
+    def get_supermarket_system
+        @supermarket_system.get_supermarket_system()
     end
 
     private
