@@ -1,16 +1,18 @@
 require 'pqueue'
 require_relative 'clients_controller'
 require_relative 'supermarket_systems_controller'
+require_relative '../views/supermarket_view'
 require_relative '../modules/random_generator'
 
-class EventsHandler
+class EventsController
     include RandomGenerator
 
-    def initialize(simulation_end_time, delay_per_iteration)
+    def initialize(simulation_end_time, delay_per_iteration, supermarket_controller)
         @client_creation_time = 3
         @simulation_end_time = simulation_end_time
+        @delay_per_iteration = delay_per_iteration
         
-        @supermarket_controller = SupermarketSystemController.new(2, 2)
+        @supermarket_controller = supermarket_controller
         @client_controller = ClientsController.new()
 
         event_queue_initialize()
@@ -20,7 +22,7 @@ class EventsHandler
         @event_queue = PQueue.new([]){ |a,b| a[0] < b[0] }
         
         (0..@simulation_end_time).each do |time|
-            @event_queue.push([time, "print_event"])
+            @event_queue.push([time+1, "print_event"])
             
             if (time % @client_creation_time) == 0
                 @event_queue.push([time, "client_creation_event"])
@@ -32,7 +34,7 @@ class EventsHandler
         end
     end
 
-    def start_simulation
+    def run_simulation
         while true
             actual_event = @event_queue.pop()
             run_event(actual_event)
@@ -43,9 +45,14 @@ class EventsHandler
         case event[1]
 
             when "print_event"
-                @supermarket_controller.print_()
-                puts '\n'
-
+                actual_time = event[0]
+                supermarket_system = @supermarket_controller.get_supermarket_system()
+                supermarket_view = SupermarketView.new(supermarket_system,
+                                                                actual_time)
+                
+                supermarket_view.print_actual_system()                                                                        
+                sleep(@delay_per_iteration)
+                
             when "client_creation_event"
                 client_creation(event[0])
 
@@ -97,6 +104,6 @@ class EventsHandler
 
 end
 
-eh = EventsHandler.new(5,10)
+#eh = EventsHandler.new(5,0)
 
-eh.start_simulation()
+#eh.run_simulation()

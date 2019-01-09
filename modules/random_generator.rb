@@ -12,4 +12,5 @@ module RandomGenerator
         generated_letter = (generated_num+96).chr
         return generated_letter
     end
+    
 end

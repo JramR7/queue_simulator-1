@@ -42,7 +42,8 @@ class RegisterSystem
         return client.get_register_time()
     end
 
-    def print_
-        print(@register_system)
+    def get_register_system
+        return @register_system
     end
+
 end

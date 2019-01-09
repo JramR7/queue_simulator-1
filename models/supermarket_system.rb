@@ -41,10 +41,14 @@ class SupermarketSystem
         return @register_system.get_registers_quantity() 
     end
 
-    def print_
-        @register_system.print_()
-        @queue_system.print_() 
+    def get_supermarket_system
+        supermarket_system = []
+        supermarket_system.push(@queue_system.get_queue_system())
+        supermarket_system.push(@register_system.get_register_system())
+        
+        return supermarket_system
     end
+    
 end
 
 
