@@ -18,7 +18,7 @@ class SupermarketView
                 client = queue[client_position]
 
                 if client != nil
-                    print " |", queue[client_position].get_name(), "| "
+                    print " |", queue[client_position].name, "| "
                 end    
             end
             print "\n"
@@ -35,19 +35,25 @@ class SupermarketView
         
         @register_system_array.each do |register|
             if register.any? == true
-                print "  ", register[0].get_name(), "  "
+                print "  ", register[0].name, "  "
             end
         end
         print "\n"
     end       
 
     def print_actual_system
-        print "Simulation time (minutes): ", @actual_time, "\n"
+        print "\nSimulation time (minutes): ", @actual_time, "\n"
         
         print_registers()
         print "\n"
 
         print_queues()
-        print "\n"
+
+        if @queue_system_array.length > 1
+            print "  (Múltiples filas)  ", "\n"
+        else
+            puts "  (Única fila)  ", "\n"
+        end
     end
+
 end

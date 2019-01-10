@@ -3,14 +3,17 @@ require_relative 'clients_controller'
 require_relative 'supermarket_systems_controller'
 require_relative '../views/supermarket_view'
 require_relative '../modules/random_generator'
+require_relative '../modules/indicators_operations'
 
 class EventsController
     include RandomGenerator
+    include IndicatorsOperations
 
     def initialize(simulation_end_time, delay_per_iteration, supermarket_controller)
         @client_creation_time = 3
         @simulation_end_time = simulation_end_time
         @delay_per_iteration = delay_per_iteration
+        @in_queue_time_indicator = []
         
         @supermarket_controller = supermarket_controller
         @client_controller = ClientsController.new()
@@ -38,6 +41,8 @@ class EventsController
         while true
             actual_event = @event_queue.pop()
             run_event(actual_event)
+            
+            update_client_queue_time()
         end
     end
 
@@ -50,7 +55,7 @@ class EventsController
                 supermarket_view = SupermarketView.new(supermarket_system,
                                                                 actual_time)
                 
-                supermarket_view.print_actual_system()                                                                        
+                supermarket_view.print_actual_system() 
                 sleep(@delay_per_iteration)
                 
             when "client_creation_event"
@@ -63,7 +68,18 @@ class EventsController
                 enter_register(event[2], event[0])
 
             when "end_simulation_event"
-                exit(true)
+                end_simulation()
+        end
+    end
+
+    def update_client_queue_time
+        supermarket_system = @supermarket_controller.get_supermarket_system
+        queue_system = supermarket_system[0]
+        
+        queue_system.each do |queue|
+            queue.each do |client|
+                @client_controller.update_time_queue(client)
+            end
         end
     end
 
@@ -83,6 +99,8 @@ class EventsController
                                                                  register_index])
             @event_queue.push([actual_time + register_time, "enter_register_event",
                                                                  register_index])
+            
+            @in_queue_time_indicator.push(client_assigned.time_in_queue)                                                                 
         end
     end
 
@@ -102,8 +120,11 @@ class EventsController
         end
     end
 
+    def end_simulation
+        avg_time_in_queue = calculate_mean(@in_queue_time_indicator)
+        
+        print "\nPromedio de espera de los clientes en la cola: ", avg_time_in_queue, "minutos \n"
+        exit(0)
+    end
+
 end
-
-#eh = EventsHandler.new(5,0)
-
-#eh.run_simulation()

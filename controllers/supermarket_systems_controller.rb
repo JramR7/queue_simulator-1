@@ -88,10 +88,10 @@ class SupermarketSystemController
     private
 
     def create_supermarket_system(queue_quantity, cash_register_quantity)
-        queue_system = QueueSystem.new(queue_quantity);
-        cash_register_system = RegisterSystem.new(cash_register_quantity)
+        @queue_system = QueueSystem.new(queue_quantity);
+        @cash_register_system = RegisterSystem.new(cash_register_quantity)
 
-        @supermarket_system = SupermarketSystem.new(cash_register_system, queue_system)
+        @supermarket_system = SupermarketSystem.new(@cash_register_system, @queue_system)
     end
 
 end

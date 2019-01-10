@@ -14,9 +14,12 @@ class ClientsController
             @name_letter = random_letter()
         end
 
-        client = Client.new(@name_letter, time_of_arrival, @time_in_cash_register)
+        @client = Client.new(@name_letter, time_of_arrival, @time_in_cash_register)
         
-        return client
+        return @client
     end
     
+    def update_time_queue(client)
+        client.update_time_queue()
+    end
 end

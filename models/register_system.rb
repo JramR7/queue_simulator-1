@@ -37,9 +37,8 @@ class RegisterSystem
     end
 
     def get_client_register_time(register_index)
-#        puts register_index
         client =  @register_system[register_index][0]
-        return client.get_register_time()
+        return client.time_in_register
     end
 
     def get_register_system

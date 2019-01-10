@@ -25,7 +25,7 @@ class SupermarketSimulation
                                                         supermarket_controller)
     end
 
-    def start_simulation
+    def simulate_supermarket
         @events_controller.run_simulation()
     end
     
@@ -33,4 +33,4 @@ end
 
 
 supermarket_simulator = SupermarketSimulation.new()
-supermarket_simulator.start_simulation()
+supermarket_simulator.simulate_supermarket()
